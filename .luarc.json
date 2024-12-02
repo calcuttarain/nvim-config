@@ -1,0 +1,10 @@
+{
+    "diagnostics.globals": [
+        "vim",
+        "cmp"
+    ],
+    "diagnostics.disable": [
+        "duplicate-index",
+        "undefined-global"
+    ]
+}
