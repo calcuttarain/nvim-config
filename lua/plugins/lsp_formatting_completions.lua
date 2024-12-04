@@ -5,8 +5,8 @@ return {
 
 		config = function()
 			require("mason").setup({
-        ensure_installed = {"mypy", "ruff", "black"}
-      })
+				ensure_installed = { "mypy", "ruff", "black" },
+			})
 		end,
 	},
 
@@ -15,7 +15,7 @@ return {
 
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "pyright"},
+				ensure_installed = { "lua_ls", "pyright" },
 			})
 		end,
 	},
@@ -25,15 +25,19 @@ return {
 
 		config = function()
 			local lspconfig = require("lspconfig")
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			lspconfig.lua_ls.setup({
-        capabilities = capabilities
-      })
-      lspconfig.pyright.setup({
-        capabilities = capabilities,
-        filetypes = {"python"}
-      })
+				capabilities = capabilities,
+			})
+			lspconfig.pyright.setup({
+				capabilities = capabilities,
+				filetypes = { "python" },
+			})
+			lspconfig.ruff.setup({
+				capabilities = capabilities,
+				filetypes = { "python" },
+			})
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gD", vim.lsp.buf.definition, {})
@@ -51,9 +55,9 @@ return {
 				sources = {
 					null_ls.builtins.formatting.stylua,
 
-          -- null_ls.builtins.formatting.ruff,
-          -- null_ls.builtins.diagnostics.mypy,
-          -- null_ls.builtins.diagnostics.black,
+					-- null_ls.builtins.formatting.ruff,
+					-- null_ls.builtins.diagnostics.mypy,
+					-- null_ls.builtins.diagnostics.black,
 				},
 			})
 
@@ -62,28 +66,54 @@ return {
 	},
 
 	--completions
-  {
-    'hrsh7th/cmp-nvim-lsp'
-  },
+	{
+		"hrsh7th/cmp-nvim-lsp",
+	},
 
-  {
-    'L3MON4D3/LuaSnip',
-    dependencies = {
-      'saadparwaiz1/cmp_luasnip',
-      "rafamadriz/friendly-snippets"
-    }
-  },
+	{
+
+		"hrsh7th/cmp-cmdline",
+	},
+
+	{
+		"L3MON4D3/LuaSnip",
+		dependencies = {
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets",
+		},
+	},
 
 	{
 		"hrsh7th/nvim-cmp",
 		config = function()
 			local cmp = require("cmp")
-      require("luasnip.loaders.from_vscode").lazy_load()
+			require("luasnip.loaders.from_vscode").lazy_load()
+
+			cmp.setup.cmdline("/", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "buffer" },
+				},
+			})
+
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = "path" },
+				}, {
+					{
+						name = "cmdline",
+						option = {
+							ignore_cmds = { "Man", "!" },
+						},
+					},
+				}),
+			})
 
 			cmp.setup({
 				snippet = {
 					expand = function(args)
-						require('luasnip').lsp_expand(args.body)
+						require("luasnip").lsp_expand(args.body)
 					end,
 				},
 				window = {
@@ -99,7 +129,7 @@ return {
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
-					{ name = 'luasnip' },
+					{ name = "luasnip" },
 				}, {
 					{ name = "buffer" },
 				}),
