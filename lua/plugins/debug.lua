@@ -5,7 +5,7 @@ return {
       local dap = require("dap")
 
       vim.keymap.set("n", "<Leader>dt", dap.toggle_breakpoint, {})
-      vim.keymap.set("n", "<Leader>dc>", dap.continue, {})
+      vim.keymap.set("n", "<Leader>dh>", dap.continue, {})
     end,
   },
 
@@ -14,6 +14,14 @@ return {
     dependencies = {
       "mfussenegger/nvim-dap",
       "nvim-neotest/nvim-nio",
+    },
+
+    {
+      'mfussenegger/nvim-dap-python',
+
+      conf = function ()
+       require("dap-python").setup("~/.virtualenvs/debugpy/bin/python") 
+      end
     },
 
     config = function()
