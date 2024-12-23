@@ -1,3 +1,6 @@
 *.swp
+*.json
 .DS_Store
 node_modules/
+
+project-mappings.lua
