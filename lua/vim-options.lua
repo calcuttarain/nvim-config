@@ -1,13 +1,16 @@
 vim.g.mapleader = " "
 vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
+vim.cmd("set tabstop=4")
+vim.cmd("set softtabstop=4")
+vim.cmd("set shiftwidth=4")
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 8
 vim.opt.shortmess:append('c')
 vim.cmd("set incsearch")
+vim.opt.termguicolors = true
+vim.opt.mouse = ""
+
 vim.api.nvim_set_keymap('n', '<leader>nh', ':nohlsearch<CR>', { noremap = true, silent = true })
 vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
   pattern = "*",
@@ -15,8 +18,6 @@ vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
     vim.cmd("silent! w")
   end
 })
-vim.opt.termguicolors = true
-vim.opt.mouse = ""
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
